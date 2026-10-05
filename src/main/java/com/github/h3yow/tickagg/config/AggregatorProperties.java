@@ -9,6 +9,7 @@ public class AggregatorProperties {
     private long allowedLatenessMs = 30_000;
     private int maxRetainedWindowsPerSymbol = 1024;
     private int maxDedupEntriesPerSymbol = 65_536;
+    private int maxRetainedRejectionsPerSymbol = 4_096;
 
     public long getWindowSizeMs() {
         return windowSizeMs;
@@ -40,5 +41,13 @@ public class AggregatorProperties {
 
     public void setMaxDedupEntriesPerSymbol(int maxDedupEntriesPerSymbol) {
         this.maxDedupEntriesPerSymbol = maxDedupEntriesPerSymbol;
+    }
+
+    public int getMaxRetainedRejectionsPerSymbol() {
+        return maxRetainedRejectionsPerSymbol;
+    }
+
+    public void setMaxRetainedRejectionsPerSymbol(int maxRetainedRejectionsPerSymbol) {
+        this.maxRetainedRejectionsPerSymbol = maxRetainedRejectionsPerSymbol;
     }
 }
