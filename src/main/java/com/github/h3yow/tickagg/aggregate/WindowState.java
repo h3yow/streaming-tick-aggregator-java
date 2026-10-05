@@ -30,6 +30,14 @@ final class WindowState {
     private long latestSeq = Long.MIN_VALUE;
     private long maxSequence = Long.MIN_VALUE;
 
+    /**
+     * Latch set the first time the window becomes externally confirmed.
+     * A sealed window is immutable forever: relaxing allowed lateness and
+     * recomputing retained events can never rewrite an already-published
+     * result.
+     */
+    private boolean sealed;
+
     WindowState(String symbol, long windowStartEpochMs, long windowSizeMs) {
         this.symbol = symbol;
         this.windowStartEpochMs = windowStartEpochMs;
@@ -75,6 +83,15 @@ final class WindowState {
 
     long maxSequence() {
         return maxSequence;
+    }
+
+    boolean isSealed() {
+        return sealed;
+    }
+
+    /** Idempotent latch: first confirmation seals the window forever. */
+    void seal() {
+        this.sealed = true;
     }
 
     OhlcBar snapshot(boolean confirmed) {
